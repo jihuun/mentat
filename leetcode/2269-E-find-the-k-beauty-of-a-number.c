@@ -5,7 +5,7 @@ int divisorSubstrings(int num, int k){
     char snum[11];
     sprintf(snum, "%d", num);
     int nsize = strlen(snum);
-    
+
     char *substr = (char *)calloc(k + 1, sizeof(char));
     int sub = 0;
     for (int i = 0; i <= nsize - k; i++) {

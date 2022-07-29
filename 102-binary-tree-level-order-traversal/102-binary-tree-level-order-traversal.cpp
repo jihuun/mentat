@@ -13,7 +13,7 @@ class Solution {
     void level_order_travel(TreeNode *root, int level, vector<vector<int>> &ret) {
         if (root == NULL)
             return;
-        if (ret.size() == level) { /* there is no ret[level], need to addsign a new vector */
+        if (ret.size() <= level) { /* there is no ret[level], need to addsign a new vector */
             vector<int> lv;
             lv.push_back(root->val);
             ret.push_back(lv);

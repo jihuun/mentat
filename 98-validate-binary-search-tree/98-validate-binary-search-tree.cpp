@@ -17,22 +17,20 @@
 [5,4,6,null,null,3,7]
  */
 class Solution {
-    bool dfs(TreeNode* root, vector<int> &arr) {
+    TreeNode* prev = NULL;
+    bool inorder(TreeNode* root) {
         if (root == NULL)
             return true;
-        if (!dfs(root->left, arr))
+        if (!inorder(root->left))
             return false;
-        //cout << root->val << " ";
-        if (!arr.empty() && arr.back() >= root->val)
+        /* inorder traval */
+        if (prev && prev->val >= root->val)
             return false;
-        arr.push_back(root->val);
-        if (!dfs(root->right, arr))
-            return false;
-        return true;
+        prev = root;
+        return inorder(root->right);
     }
 public:
     bool isValidBST(TreeNode* root) {
-        vector<int> arr;
-        return dfs(root, arr);
+        return inorder(root);
     }
 };

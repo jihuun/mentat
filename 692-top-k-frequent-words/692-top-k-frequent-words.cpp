@@ -18,11 +18,13 @@ public:
         /* push string and freq value to heap */
         priority_queue<pair<string, int>, vector<pair<string, int> >, myCompare> pq;
         for (auto it: freq)
-            pq.push({it.first, it.second});
+            pq.push(make_pair(it.first, it.second));
+            //pq.push({it.first, it.second});
         
         /* pop k times */
         vector<string> ret;
-        for (int i = 0; i < k; i++) {
+        //for (int i = 0; i < k; i++) {
+        while (k--) {
             ret.push_back(pq.top().first);
             pq.pop();
         }

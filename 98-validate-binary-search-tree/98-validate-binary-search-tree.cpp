@@ -17,19 +17,25 @@
 [5,4,6,null,null,3,7]
  */
 class Solution {
-    TreeNode* prev = NULL;
+
+public:
+    TreeNode *prev = NULL;
     bool inorder(TreeNode* root) {
-        if (root == NULL)
+        if (!root)
             return true;
-        if (!inorder(root->left))
+             
+        if (!isValidBST(root->left))
             return false;
-        /* inorder traval */
+        
         if (prev && prev->val >= root->val)
             return false;
         prev = root;
-        return inorder(root->right);
+        
+        if (!isValidBST(root->right))
+            return false;
+        return true;
+        
     }
-public:
     bool isValidBST(TreeNode* root) {
         return inorder(root);
     }

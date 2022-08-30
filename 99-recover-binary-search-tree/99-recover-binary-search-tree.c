@@ -13,7 +13,6 @@ void inorder(struct TreeNode* root)
     if (root == NULL)
         return;
     inorder(root->left);
-    printf("%d ", root->val);
     if (prev && root->val < prev->val) {
         n2 = root; // search the final target 2
         if (n1 == NULL) n1 = prev; // fix the target 1

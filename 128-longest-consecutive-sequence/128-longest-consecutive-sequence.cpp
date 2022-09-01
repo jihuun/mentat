@@ -2,15 +2,10 @@ class Solution {
 public:
     int longestConsecutive(vector<int>& nums) {
         unordered_map<int, int> table;
-        int nmin = INT_MAX;
-        int nmax = INT_MIN;
         int max_cnt = 0;
         
-        for (auto it: nums) {
+        for (auto it: nums)
             table[it] = 1;
-            nmin = min(nmin, it);
-            nmax = max(nmax, it);
-        }
         
         for (auto it: table) {
             int cur = it.first;

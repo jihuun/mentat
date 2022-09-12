@@ -16,11 +16,10 @@ public:
         ListNode *newhead = head;
         
         for (; cur != NULL; cur = cur->next) {
-            if (prev && prev->val == cur->val) {
+            if (prev && prev->val == cur->val)
                 prev->next = cur->next;
-            } else {
+            else
                 prev = cur;
-            }
         }
         return newhead;
     }

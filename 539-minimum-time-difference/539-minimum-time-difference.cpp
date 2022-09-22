@@ -22,12 +22,14 @@ public:
         std::sort(minutes.begin(), minutes.end());
         int diff = 0;
         int min_diff = 0;
+        // 0 1 2 3
+        // 0-1 1-2 2-3 3-0
         for (int i = 1; i < tsize; i++) {
             diff = minutes[i] - minutes[i - 1];
             if (diff < 24*30)
                 min_diff = diff;
             else
-                min_diff = abs(max_minute - diff);
+                min_diff = max_minute - diff;
             min_minute = std::min(min_minute, min_diff);
         } 
         diff = minutes[tsize - 1] - minutes[0];

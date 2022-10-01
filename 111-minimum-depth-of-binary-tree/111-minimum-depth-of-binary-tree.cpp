@@ -12,19 +12,13 @@
 class Solution {
 public:
     int minDepth(TreeNode* root) {
-        int left = 0;
-        int right = 0;
-        
         if (!root)
             return 0;
-        // no compare with minDepth() is 0
-        left = minDepth(root->left);
-        right = minDepth(root->right);        
-        if (left == 0)
-            return right + 1;
-        if (right == 0)
-            return left + 1;
-        return std::min(left, right) + 1;
+        if (!root->left)
+            return minDepth(root->right) + 1;
+        if (!root->right)
+            return minDepth(root->left) + 1;        
+        return std::min(minDepth(root->left), minDepth(root->right)) + 1;
     }
 };
 

@@ -8,30 +8,45 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
-
-class myCompare {
-public:
-    bool operator() (const ListNode *p1, const ListNode *p2) {
-        return p1->val < p2->val;
-    }
-};
+/*
+    1  3  4
+nh 
+    2  2  5  6
+*/
 
 class Solution {
+    ListNode *merge_list(ListNode *left, ListNode *right) {
+        ListNode *newhead = new ListNode;
+        ListNode *prev = newhead;
+        
+        while (left && right) {
+            if (left->val < right->val) {
+                prev->next = left;
+                left = left->next;
+            } else {
+                prev->next = right;
+                right = right->next;
+            }
+            prev = prev->next;
+        }
+        prev->next = (left) ? left : right; // node is not null
+        return newhead->next;
+    }
 public:
-    ListNode* sortList(ListNode* head) {
-        priority_queue<ListNode*, vector<ListNode*>, myCompare> pq;
-        ListNode *node = head;
-        while (node != NULL) {
-            pq.push(node);
-            node = node->next;
+    ListNode *sortList(ListNode *head) {
+        if (!head || !head->next)
+            return head;
+        ListNode *r_head = head;
+        ListNode *slow = head;
+        ListNode *fast = head;
+        
+        while (fast->next && fast->next->next) {
+            slow = slow->next;
+            fast = fast->next->next;
         }
-        ListNode *newhead = NULL;
-        while (!pq.empty() ) {
-            node = pq.top();
-            node->next = newhead;
-            newhead = node;
-            pq.pop();
-        }
-        return newhead;
+        r_head = slow->next;
+        slow->next = NULL;
+        
+        return merge_list(sortList(head), sortList(r_head));
     }
 };

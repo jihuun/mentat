@@ -19,7 +19,8 @@ class Solution {
             if (mem[i] == true)
                 return true;
         }
-        return false;
+        mem[cur] = false;
+        return mem[cur];
     }
 public:
     bool canJump(vector<int>& nums) {

@@ -38,14 +38,14 @@ public:
         for (int i = 0; i < rsize; i++) {
             for (int j = 0; j < csize; j++) {
                 if (board[i][j] == 'O')
-                    flip_by(board, i, j, 'O', 'X');
+                    board[i][j] = 'X';
             }
         }
         /* convert E to O */
         for (int i = 0; i < rsize; i++) {
             for (int j = 0; j < csize; j++) {
                 if (board[i][j] == 'E')
-                    flip_by(board, i, j, 'E', 'O');
+                    board[i][j] = 'O';
             }
         }
     }

@@ -2,17 +2,17 @@ class Solution {
     int rsize;
     int csize;
 
-    void flip_by(vector<vector<char>>& board, int r, int c, char tgt, char to) {
+    void flip_by(vector<vector<char>>& board, int r, int c) {
         if (r < 0 || r >= rsize || c < 0 || c >= csize)
             return;
-        if (board[r][c] == to || board[r][c] == 'X') {
+        if (board[r][c] == 'E' || board[r][c] == 'X') {
             return;
         }
-        board[r][c] = to;
-        flip_by(board, r + 1, c, tgt, to);
-        flip_by(board, r - 1, c, tgt, to);
-        flip_by(board, r, c + 1, tgt, to);
-        flip_by(board, r, c - 1, tgt, to);
+        board[r][c] = 'E';
+        flip_by(board, r + 1, c);
+        flip_by(board, r - 1, c);
+        flip_by(board, r, c + 1);
+        flip_by(board, r, c - 1);
     }
 public:
     void solve(vector<vector<char>>& board) {
@@ -23,16 +23,16 @@ public:
         /* check col 0 and last boarer */
         for (int i = 0; i < rsize; i++) {
             if (board[i][0] == 'O')
-                flip_by(board, i, 0, 'O', 'E');
+                flip_by(board, i, 0);
             if (board[i][csize - 1] == 'O')
-                flip_by(board, i, csize - 1, 'O','E');
+                flip_by(board, i, csize - 1);
         }
         /* check row 0 and last boarer */
         for (int i = 0; i < csize; i++) {
             if (board[0][i] == 'O')
-                flip_by(board, 0, i, 'O', 'E');
+                flip_by(board, 0, i);
             if (board[rsize - 1][i] == 'O')
-                flip_by(board, rsize - 1, i, 'O','E');
+                flip_by(board, rsize - 1, i);
         }
         /* convert O to X */
         for (int i = 1; i < rsize - 1; i++) {

@@ -35,8 +35,8 @@ public:
                 flip_by(board, rsize - 1, i, 'O','E');
         }
         /* convert O to X */
-        for (int i = 0; i < rsize; i++) {
-            for (int j = 0; j < csize; j++) {
+        for (int i = 1; i < rsize - 1; i++) {
+            for (int j = 1; j < csize - 1; j++) {
                 if (board[i][j] == 'O')
                     board[i][j] = 'X';
             }

@@ -1,19 +1,20 @@
 class Solution {
-    int mem[10001];
+    unordered_map<int, int> mem;
 public:
     int numSquares(int n) {
-        int ret = INT_MAX;
-        if (mem[n])
+        int min = INT_MAX;
+        if (mem.find(n) != mem.end())
             return mem[n];
-        if (n == 0)
+        if (n == 0) {
             return 0;
-        
-        for (int i = 1; i*i <= n; i++) {
-            if (n - (i*i) < 0)
-                continue;
-            ret = min(ret, numSquares(n - (i*i)) + 1);
         }
-        mem[n] = ret;
-        return ret;
+        
+        for (int i = 1; i * i <= n; i++) {
+            if (n - i * i < 0)
+                continue;
+            min = std::min(min, numSquares(n - i * i) + 1);
+        }
+        mem[n] = min;
+        return min;
     }
 };

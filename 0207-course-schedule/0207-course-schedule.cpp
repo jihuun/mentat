@@ -1,34 +1,34 @@
 class Solution {
-    vector<vector<int>> adj;
 public:
     bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
-        adj = vector<vector<int>>(numCourses);
+        vector<vector<int>> graph(numCourses);
         unordered_map<int, int> indeg;
-        vector<int> ret;
-        // [1] -> [0]
+        queue<int> q;
+        
         for (auto it: prerequisites) {
-            adj[it[1]].push_back(it[0]);
+            // 1 -> 0
+            graph[it[1]].push_back(it[0]);
             indeg[it[0]]++;
         }
-        
-        queue<int> q;
         for (int i = 0; i < numCourses; i++) {
             if (indeg[i] == 0)
                 q.push(i);
         }
+        
+        int nodecnt = 0;
         while (!q.empty()) {
-            int tgt = q.front();
-            q.pop();
-            ret.push_back(tgt);
-            for (int i = 0; i < adj[tgt].size(); i++) {
-                int adjval = adj[tgt][i];
-                indeg[adjval]--;
-                if (indeg[adjval] == 0)
-                    q.push(adjval);
+            int cur = q.front();
+            q.pop();    
+            nodecnt++;
+            for (int i = 0; i < graph[cur].size(); i++) {
+                int next = graph[cur][i];
+                indeg[next]--;
+                if (indeg[next] == 0)
+                    q.push(next);
             }
         }
-        if (ret.size() == numCourses)
-            return true;
-        return false;
+        if (nodecnt != numCourses)
+            return false;
+        return true;
     }
 };

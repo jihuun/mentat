@@ -8,13 +8,13 @@ class Solution {
             return 0;
         if (mem[i1][i2] != -1)
             return mem[i1][i2];
-        
         if (t1[i1] == t2[i2]) {
-            mem[i1][i2] = longest(i1-1 , i2-1) + 1;
+            mem[i1][i2] = longest(i1 - 1, i2 - 1) + 1;
         } else {
-            mem[i1][i2] = max(longest(i1, i2-1), longest(i1-1 , i2));
+            mem[i1][i2] = max(longest(i1, i2 - 1), longest(i1 - 1, i2));
         }
         return mem[i1][i2];
+        
     }
 public:
     int longestCommonSubsequence(string text1, string text2) {

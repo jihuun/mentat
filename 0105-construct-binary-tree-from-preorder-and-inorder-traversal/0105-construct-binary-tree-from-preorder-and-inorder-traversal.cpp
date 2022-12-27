@@ -20,16 +20,20 @@ l | rrrrrrr
   
 */
 class Solution {
+    unordered_map<int, int> in_idx;
 public:
     TreeNode *build_tree(vector<int> pre, vector<int> in, int left, int right, int root_idx) {
         // left, right -> index of in
         // root_idx -> index of pre
         if (left > right) /* base case */
             return NULL;
+        /*
         int pivot = left;
-        for (pivot = left; pivot <= right; pivot++)
+        for (pivot = left; pivot <= right; pivot++) // O(n)
             if (in[pivot] == pre[root_idx])
                 break;
+        */
+        int pivot = in_idx[pre[root_idx]]; // O(1)
             
         TreeNode *node = new TreeNode;
         node->val = pre[root_idx];
@@ -39,6 +43,9 @@ public:
     }
     
     TreeNode *buildTree(vector<int>& preorder, vector<int>& inorder) {
+        for (int i = 0; i < inorder.size(); i++)
+            in_idx[inorder[i]] = i;
+        
         return build_tree(preorder, inorder, 0, inorder.size() - 1, 0);
     }
 };

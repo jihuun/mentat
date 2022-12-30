@@ -1,6 +1,7 @@
 class Solution {
     vector<vector<int>> ret;
     vector<int> tmp;
+    unordered_map<int, bool> tmp_map;
 public:
     void back_tracking(vector<int> nums, int size) {
         if (size < 0)
@@ -11,17 +12,13 @@ public:
         }
         for (int i = 0; i < nums.size(); i++) {
             // if nums[i] is already exist in nums[i]; then continue
-            bool cont = false;
-            for (int j = 0; j < tmp.size(); j++) {
-                if (tmp[j] == nums[i]) {
-                    cont = true;
-                    break;
-                }
-            }
-            if (cont == true)
+            if (tmp_map[nums[i]] == true) // O(1) Wow!
                 continue;
+            
             tmp.push_back(nums[i]);
+            tmp_map[nums[i]] = true;
             back_tracking(nums, size - 1);
+            tmp_map[nums[i]] = false;
             tmp.pop_back();
         }
     }

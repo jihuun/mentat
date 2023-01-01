@@ -1,31 +1,30 @@
 class Solution {
-public:
     vector<vector<int>> ret;
     vector<int> tmp;
-    unordered_map<int, int> count;
-    
-    void back_tracking(vector<int> nums, int size) {
+public:
+    void back_tracking(unordered_map<int, int> &freq, int size) {
         if (size < 0)
             return;
         if (size == 0) {
             ret.push_back(tmp);
             return;
         }
-        for (auto it: count) { // iterate hashtable ...!
-            if (it.second == 0)
+        for (auto it: freq) {
+            if (freq[it.first] == 0)
                 continue;
             
-            count[it.first]--;
+            freq[it.first]--;
             tmp.push_back(it.first);
-            back_tracking(nums, size - 1);
+            back_tracking(freq, size - 1);
             tmp.pop_back();
-            count[it.first]++;
+            freq[it.first]++;
         }
     }
     vector<vector<int>> permuteUnique(vector<int>& nums) {
+        unordered_map<int, int> freq; // nums[i] / frequency
         for (auto it: nums)
-            count[it]++;
-        back_tracking(nums, nums.size());
+            freq[it]++;
+        back_tracking(freq, nums.size());
         return ret;
     }
 };

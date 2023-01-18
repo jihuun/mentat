@@ -1,30 +1,25 @@
 class Solution {
     vector<vector<int>> ret;
     vector<int> tmp;
-    unordered_map<int, bool> tmp_map;
+    unordered_map<int, int> map;
 public:
-    void back_tracking(vector<int> nums, int size) {
-        if (size < 0)
-            return;
-        if (size == 0) {
+    void back_tracking(vector<int> nums, int cnt) {
+        if (cnt == 0) {
             ret.push_back(tmp);
             return;
         }
         for (int i = 0; i < nums.size(); i++) {
-            // if nums[i] is already exist in nums[i]; then continue
-            if (tmp_map[nums[i]] == true) // O(1) Wow!
+            if (map[nums[i]] == true)
                 continue;
-            
+            map[nums[i]] = true;
             tmp.push_back(nums[i]);
-            tmp_map[nums[i]] = true;
-            back_tracking(nums, size - 1);
-            tmp_map[nums[i]] = false;
+            back_tracking(nums, cnt - 1);
             tmp.pop_back();
+            map[nums[i]] = false;
         }
     }
     vector<vector<int>> permute(vector<int>& nums) {
-        int nsize = nums.size();
-        back_tracking(nums, nsize);
+        back_tracking(nums, nums.size());
         return ret;
     }
 };

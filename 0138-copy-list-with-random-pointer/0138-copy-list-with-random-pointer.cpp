@@ -16,29 +16,27 @@ public:
 
 class Solution {
 public:
-    Node* copyRandomList(Node* head) {
-        unordered_map<Node *, int> orig_idx;
-        unordered_map<int, Node *> idx_new;
+    Node *copyRandomList(Node *head) {
+        unordered_map<Node *, Node *> map;
         
-        Node *newhead = new Node(0);
-        Node *node = head;
-        Node *copy = newhead;
+        Node *new_head = new Node(0);
+        Node *gen = new_head;
+        Node *n = head;
         int idx = 0;
-        for (; node; node = node->next, copy = copy->next) {
-            copy->next = new Node(node->val);   
-            orig_idx[node] = idx;
-            idx_new[idx] = copy->next;
+        for (; n; n = n->next) {
+            gen->next = new Node(n->val);
+            gen = gen->next;
+            map[n] = gen;
             idx++;
         }
-        node = head;
-        copy = newhead->next;
-        for (; node; node = node->next, copy = copy->next) {
-            if (node->random)
-                copy->random = idx_new[orig_idx[node->random]];
+        n = head;
+        gen = new_head->next;
+        for (; n; n = n->next, gen = gen->next) {
+            if (n->random)
+                gen->random = map[n->random];
             else
-                copy->random = NULL;
+                gen->random = NULL;
         }
-            
-        return newhead->next;
+        return new_head->next;
     }
 };

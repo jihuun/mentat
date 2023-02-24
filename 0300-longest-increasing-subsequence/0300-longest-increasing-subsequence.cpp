@@ -11,18 +11,17 @@
 class Solution {
 public:
     int lengthOfLIS(vector<int>& nums) {
-        vector<int> sub;
-        sub.push_back(nums[0]);
-        
-        for (int i = 1; i < nums.size(); i++) {
-            if (sub[sub.size() - 1] < nums[i]) {
-                sub.push_back(nums[i]);
-            } else {
-                int j = 0;
-                while (sub[j] < nums[i]) j++;
-                sub[j] = nums[i];
+        int maxlen = 1;
+        vector<int> mem(nums.size(), 1);
+
+        for (int i = 0; i < nums.size(); i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[j] < nums[i]) {
+                    mem[i] = std::max(mem[i], mem[j] + 1);
+                }
             }
+            maxlen = std::max(maxlen, mem[i]);
         }
-        return sub.size();
+        return maxlen;
     }
 };

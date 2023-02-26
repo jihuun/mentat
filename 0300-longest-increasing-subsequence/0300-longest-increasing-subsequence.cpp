@@ -1,27 +1,33 @@
-/*
-새로운 sub배열(정렬된)을 생성하는 방법. sub배열의 크기가 LIS임
-20 100 10 12 5 13
-
-20 100
-10 100
-10 12
-5 12
-5 12 13
-*/
 class Solution {
+    int binary_search(vector<int> &nums, int tgt) {
+        int left = 0;
+        int right = nums.size() - 1;
+        //  1 2 3 5  (4)
+        // 1 3 5 7  (2)
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] == tgt) {
+                return mid;
+            } else if (nums[mid] < tgt) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+        return left;
+    }
 public:
     int lengthOfLIS(vector<int>& nums) {
-        int maxlen = 1;
-        vector<int> mem(nums.size(), 1);
-
+        vector<int> sub;
+        sub.push_back(nums[0]);
         for (int i = 0; i < nums.size(); i++) {
-            for (int j = 0; j < i; j++) {
-                if (nums[j] < nums[i]) {
-                    mem[i] = std::max(mem[i], mem[j] + 1);
-                }
+            if (sub[sub.size()-1] < nums[i]) {
+                sub.push_back(nums[i]);
+            } else {
+                int j = binary_search(sub, nums[i]);
+                sub[j] = nums[i];
             }
-            maxlen = std::max(maxlen, mem[i]);
         }
-        return maxlen;
+        return sub.size();
     }
 };

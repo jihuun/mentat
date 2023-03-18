@@ -1,37 +1,25 @@
 class Solution {
 public:
     int minSubArrayLen(int target, vector<int>& nums) {
-        // if greater, size down by begin
-        // if smaller, size up by last
-        int st = 0;
-        int end = 0;
-        int sum = nums[st];
-        int len = 1;
+        int left = 0;
+        int right = 0;
+        int sum = nums[left];
         int minlen = nums.size();
+        int len = 1;
         
-        
-        while (st <= end && end < nums.size()) {
-            
-            if (sum >= target) {
-                minlen = std::min(len, minlen);
-                
-                if (st == end) {
-                    st++;
-                    end++;
-                    sum = nums[st];
-                } else {
-                    sum -= nums[st++];
-                    len--;
-                }
-            } else {
-                end++;
-                if (end >= nums.size())
+        while (right < nums.size() && left <= right) {
+            if (sum < target) {
+                if (right == nums.size() -1)
                     break;
-                sum += nums[end];
+                sum += nums[++right];
                 len++;
+            } else {
+                minlen = std::min(minlen, len);
+                sum -= nums[left++];
+                len--;
             }
         }
-        if (st == 0 && end >= nums.size() && sum < target)
+        if (len == nums.size() && minlen < target)
             return 0;
         return minlen;
     }

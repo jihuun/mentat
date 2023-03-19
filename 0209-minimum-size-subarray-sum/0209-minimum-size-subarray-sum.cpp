@@ -4,7 +4,7 @@ public:
         int left = 0;
         int right = 0;
         int sum = nums[left];
-        int minlen = nums.size();
+        int minlen = INT_MAX;
         int len = 1;
         
         while (right < nums.size() && left <= right) {
@@ -19,8 +19,6 @@ public:
                 len--;
             }
         }
-        if (len == nums.size() && minlen < target)
-            return 0;
-        return minlen;
+        return (minlen == INT_MAX) ? 0 : minlen; 
     }
 };

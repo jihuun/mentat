@@ -4,21 +4,23 @@ public:
         int left = 0;
         int right = 0;
         int sum = nums[left];
-        int minlen = INT_MAX;
         int len = 1;
+        int minlen = INT_MAX;
         
-        while (right < nums.size() && left <= right) {
-            if (sum < target) {
-                if (right == nums.size() -1)
-                    break;
-                sum += nums[++right];
-                len++;
-            } else {
+        while (left <= right && right < nums.size()) {
+            if (sum >= target) {
                 minlen = std::min(minlen, len);
                 sum -= nums[left++];
                 len--;
+            } else {
+                if (right + 1 == nums.size())
+                    break;
+                sum += nums[++right];
+                len++;
             }
         }
-        return (minlen == INT_MAX) ? 0 : minlen; 
+        if (minlen == INT_MAX)
+            return 0;
+        return minlen;
     }
 };

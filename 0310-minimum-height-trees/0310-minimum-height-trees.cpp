@@ -2,11 +2,9 @@ class Solution {
 public:
     vector<int> findMinHeightTrees(int n, vector<vector<int>>& edges) {
         vector<vector<int>> graph(n);
-        unordered_map<int, int> indeg;
+        vector<int> indeg(n);
         vector<int> ret;
-        queue<int> q;
-        
-        if (n == 1)
+        if (n <= 1)
             return {0};
         for (auto it: edges) {
             graph[it[0]].push_back(it[1]);
@@ -14,24 +12,29 @@ public:
             indeg[it[0]]++;
             indeg[it[1]]++;
         }
-        for (int i = 0; i < n; i++)
+        queue<int> q;
+        for (int i = 0; i < n; i++) {
             if (indeg[i] == 1)
-                q.push(i);   
+                q.push(i);
+        }
         
         while (!q.empty()) {
+            int qsize = q.size();
             ret.clear();
-            int nr_leaf = q.size();
-            while (nr_leaf--) {
+            
+            while (qsize--) {
                 int node = q.front();
                 q.pop();
                 ret.push_back(node);
                 for (int i = 0; i < graph[node].size(); i++) {
                     int adj = graph[node][i];
-                    if (--indeg[adj] == 1)
+                    indeg[adj]--;
+                    if (indeg[adj] == 1)
                         q.push(adj);
                 }
             }
-        }
-        return ret;        
+            
+        } 
+        return ret;
     }
 };

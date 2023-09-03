@@ -12,13 +12,8 @@
 class Solution {
 public:
     bool is_same(TreeNode* r, TreeNode* s) {
-        if (!r && s)
-            return false;
-        if (r && !s)
-            return false;
-        if (!r && !s)
-            return true;
-        
+        if (!r || !s)
+            return !r && !s;
         return r->val == s->val && is_same(r->left, s->left) && is_same(r->right, s->right);
     }
     bool isSubtree(TreeNode* root, TreeNode* subRoot) {

@@ -1,25 +1,20 @@
 class Solution {
 public:
-    int size_r = 0;
-    int size_c = 0;
     int vis[101][101] = {0};
-
-    int path(vector<vector<int>>& obt, int i, int j) {
+    int path(vector<vector<int>>& obs, int i , int j) {
         if (i < 0 || j < 0)
             return 0;
-        if (obt[i][j] == 1)
+        if (obs[i][j])
             return 0;
         if (i == 0 && j == 0)
             return 1;
         if (vis[i][j])
             return vis[i][j];
-        vis[i][j] = path(obt, i - 1, j) + path(obt, i, j - 1);
-        return vis[i][j];
         
+        vis[i][j] = path(obs, i - 1, j) + path(obs, i, j-1);
+        return vis[i][j];
     }
-    int uniquePathsWithObstacles(vector<vector<int>>& obt) {
-        size_r = obt.size();
-        size_c = obt[0].size();
-        return path(obt, size_r - 1, size_c - 1);
+    int uniquePathsWithObstacles(vector<vector<int>>& obs) {
+        return path(obs, obs.size() - 1, obs[0].size() - 1);
     }
 };

@@ -1,17 +1,17 @@
 class Solution {
 public:
-    vector<int> mem;
-    int max_rob(vector<int> nums, int cur) {
-        if (cur < 0)
+    vector<int> vis;
+    int act(vector<int>& nums, int n) {
+        if (n < 0)
             return 0;
-        if (mem[cur] != -1)
-            return mem[cur];
-        
-        mem[cur] = std::max(max_rob(nums, cur - 1), max_rob(nums, cur - 2) + nums[cur]);
-        return mem[cur];
+        if (vis[n] != -1)
+            return vis[n];
+        vis[n] = max(act(nums, n-1), act(nums, n -2) + nums[n]);
+        return vis[n];
     }
+    
     int rob(vector<int>& nums) {
-        mem = vector<int>(nums.size(), -1);
-        return max_rob(nums, nums.size() - 1);
+        vis = vector<int>(101, -1);
+        return act(nums, nums.size() - 1);
     }
 };

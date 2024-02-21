@@ -12,11 +12,12 @@ public:
         parent[roota] = rootb;
     }
     bool validPath(int n, vector<vector<int>>& edges, int src, int dst) {
-        parent = vector<int>(n, 0);
+        parent = vector<int>(n);
         for (int i = 0; i < n; i++)
             parent[i] = i;
-        for (auto it: edges)
+        for (auto it: edges) {
             do_union(it[0], it[1]);
+        }
         return find(src) == find(dst);
     }
 };
